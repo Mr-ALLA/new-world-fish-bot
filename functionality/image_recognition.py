@@ -52,10 +52,14 @@ def trying_to_catch():
         print("Waiting for fish...")
 
 def casting():
+    print("Resetting Camera after fish inspect animation...")
+    pyautogui.keyUp('b')
     print("Casting Fishing Rod!")
     cast_time = random.uniform(1.5,2.2)
     print("Chosen cast length is: " + str(cast_time) + " seconds!")
     mouseclick_delay(cast_time)
+    sleep(0.5)
+    pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
     sleep(3)
 
 def reeling():

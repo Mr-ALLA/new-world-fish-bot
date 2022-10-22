@@ -7,9 +7,9 @@ keep_going = True
 while keep_going:
     result_from_model = ir.return_correct_action()
     if result_from_model == 0:
-        print("Main Loop: Nothing happening... Attempting to cast rod.")
-        print("Main Loop: Attemtping to cast in 5 seconds...")
-        sleep(5)
+        print("Nothing happening... Attempting to cast rod.")
+        print("Pausing to let a possible fish inspect animation play...")
+        sleep(6)
         ir.casting()
     elif result_from_model == 2:
         print("Main Loop: Spotted waiting for fish. Going to trying to catch...")
