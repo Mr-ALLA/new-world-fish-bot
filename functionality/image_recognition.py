@@ -78,19 +78,15 @@ def reeling():
             print("No color found/fish caught, stopping reel")
             break
 
-        
-
 
 def return_correct_action():
-    ##fish_found = imagesearch("./resources/fish_caught.png")
     waiting_for_fish = imagesearch("./resources/waiting_for_fish.png")
-    #stop_reel = imagesearch("./resources/stop_reeling.png") #handled by color detection
-    ##if fish_found[0] != -1:
-        ##return 1
+    image = pyautogui.screenshot()
+    img_arr = np.array(image)
     if waiting_for_fish[0] != -1:
         return 2
-    #elif stop_reel[0] != -1:
-        #return 3
+    elif cd.find_green(img_arr) == True:
+        return 3
     else:
         return 0
 
