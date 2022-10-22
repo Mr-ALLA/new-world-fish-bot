@@ -47,12 +47,13 @@ def trying_to_catch():
         if fish_found[0] != -1:
             pyautogui.click()
             print("Clicking to catch!")
+            sleep(1.5)
             break
         print("Waiting for fish...")
 
 def casting():
     print("Casting Fishing Rod!")
-    cast_time = random.uniform(1.5,3)
+    cast_time = random.uniform(1.5,2.2)
     print("Chosen cast length is: " + str(cast_time) + " seconds!")
     mouseclick_delay(cast_time)
     sleep(3)
@@ -63,26 +64,27 @@ def reeling():
         default_pause = random.uniform(0.5,1.2)
         orange_pause = random.uniform(1.0,2.5)
         red_pause = random.uniform(2.0,3.0)
-        reel_length = random.uniform(1.0,2.0)
+        reel_dur_green = random.uniform(1.8,2.2)
+        reel_dur_orange = random.uniform(1.2,1.6)
 
         image = pyautogui.screenshot()
         img_arr = np.array(image)
 
-        sleep(0.5)
+        sleep(0.2)
 
         if cd.find_green(img_arr) == True:
             print("Spotted green color! Reeling...")
-            mouseclick_delay(reel_length)
+            mouseclick_delay(reel_dur_green)
             sleep(default_pause)
         
-        if cd.find_orange(img_arr) == True:
+        elif cd.find_orange(img_arr) == True:
             print("Spotted orange color! Pausing for a moment...")
             sleep(orange_pause)
             print("Resuming reel...")
-            mouseclick_delay(reel_length)
+            mouseclick_delay(reel_dur_orange)
             sleep(default_pause)
 
-        if cd.find_red(img_arr) == True:
+        elif cd.find_red(img_arr) == True:
             print("Spotted red color. Better pause for a moment...")
             sleep(red_pause)
 
