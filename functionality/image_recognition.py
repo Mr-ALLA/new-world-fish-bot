@@ -1,9 +1,10 @@
 from python_imagesearch.imagesearch import imagesearch
 import pyautogui
+import numpy as np
 from time import sleep
 from datetime import datetime
 import random
-
+from functionality import color_detection as cd
 
 
 def check_for_fish():
@@ -52,43 +53,61 @@ def casting():
     sleep(3)
 
 def reeling():
-    sleep_length = random.randint(1,2.5)
     while True:
-        reel_length = random.randint(0.8,1.5)
-        pyautogui.click(duration=reel_length)
-        stop_reel = imagesearch("./resources/stop_reeling.png")
-        if stop_reel[0] != -1:
-            sleep(sleep_length)
+        default_pause = random.randint(0.5,1.2)
+        orange_pause = random.randint(1,2.5)
+        red_pause = random.randint(2,3)
+        reel_length = random.randint(1.0,2.0)
+
+        image = pyautogui.screenshot()
+        img_arr = np.array(image)
+
+        if cd.find_green(img_arr) == True:
+            pyautogui.click(duration=reel_length)
+            sleep(default_pause)
+        
+        if cd.find_orange(img_arr) == True:
+            sleep(orange_pause)
+            pyautogui.click(duration=reel_length)
+            sleep(default_pause)
+
+        if cd.find_red(img_arr) == True:
+            sleep(red_pause)
+
+        else:
+            print("No color found/fish caught, stopping reel")
             break
+
+        
 
 
 def return_correct_action():
     ##fish_found = imagesearch("./resources/fish_caught.png")
     waiting_for_fish = imagesearch("./resources/waiting_for_fish.png")
-    stop_reel = imagesearch("./resources/stop_reeling.png")
+    #stop_reel = imagesearch("./resources/stop_reeling.png") #handled by color detection
     ##if fish_found[0] != -1:
         ##return 1
     if waiting_for_fish[0] != -1:
         return 2
-    elif stop_reel[0] != -1:
-        return 3
+    #elif stop_reel[0] != -1:
+        #return 3
     else:
         return 0
 
 
-keep_going = True
-while keep_going:
-    result_from_model = return_correct_action()
-    if result_from_model == 0:
-        print("Nothing happening... Attempting to cast rod.")
-        casting()
+#keep_going = True
+#while keep_going:
+    #result_from_model = return_correct_action()
+    #if result_from_model == 0:
+        #print("Nothing happening... Attempting to cast rod.")
+        #casting()
     ##elif result_from_model == 1:
         ##print("Wrong Place!!") #handled in the trying to catch function
-    elif result_from_model == 2:
-        trying_to_catch()
-    elif result_from_model == 3:
-        print("Model saw the red reel color!!")
-        reeling()
-    else:
-        print("Something is wrong with the model!!")
+    #elif result_from_model == 2:
+        #trying_to_catch()
+    #elif result_from_model == 3:
+        #print("Model saw the red reel color!!")
+        #reeling()
+    #else:
+        #print("Something is wrong with the model!!")
 
