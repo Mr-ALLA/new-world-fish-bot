@@ -54,6 +54,7 @@ def casting():
 
 def reeling():
     while True:
+        print("In reeling function: Starting reel!")
         default_pause = random.randint(0.5,1.2)
         orange_pause = random.randint(1,2.5)
         red_pause = random.randint(2,3)
@@ -63,15 +64,19 @@ def reeling():
         img_arr = np.array(image)
 
         if cd.find_green(img_arr) == True:
+            print("Spotted green color! Reeling...")
             pyautogui.click(duration=reel_length)
             sleep(default_pause)
         
         if cd.find_orange(img_arr) == True:
+            print("Spotted orange color! Pausing for a moment...")
             sleep(orange_pause)
+            print("Resuming reel...")
             pyautogui.click(duration=reel_length)
             sleep(default_pause)
 
         if cd.find_red(img_arr) == True:
+            print("Spotted red color. Better pause for a moment...")
             sleep(red_pause)
 
         else:
