@@ -4,7 +4,7 @@ import numpy as np
 from time import sleep
 from datetime import datetime
 import random
-from functionality import color_detection as cd
+import color_detection as cd
 
 
 def check_for_fish():
@@ -29,6 +29,11 @@ def check_reel():
     else:
         return 0
 
+def mouseclick_delay(delay):
+    pyautogui.mouseDown()
+    sleep(delay)
+    pyautogui.mouseUp()
+
 def trying_to_catch():
     start_time = datetime.now()
     print(start_time)
@@ -47,32 +52,34 @@ def trying_to_catch():
 
 def casting():
     print("Casting Fishing Rod!")
-    cast_time = random.randint(0.8,2)
-    print("Chosen cast length is: " + cast_time + " seconds!")
-    pyautogui.click(duration=cast_time)
+    cast_time = random.uniform(1.5,3)
+    print("Chosen cast length is: " + str(cast_time) + " seconds!")
+    mouseclick_delay(cast_time)
     sleep(3)
 
 def reeling():
     while True:
         print("In reeling function: Starting reel!")
-        default_pause = random.randint(0.5,1.2)
-        orange_pause = random.randint(1,2.5)
-        red_pause = random.randint(2,3)
-        reel_length = random.randint(1.0,2.0)
+        default_pause = random.uniform(0.5,1.2)
+        orange_pause = random.uniform(1.0,2.5)
+        red_pause = random.uniform(2.0,3.0)
+        reel_length = random.uniform(1.0,2.0)
 
         image = pyautogui.screenshot()
         img_arr = np.array(image)
 
+        sleep(0.5)
+
         if cd.find_green(img_arr) == True:
             print("Spotted green color! Reeling...")
-            pyautogui.click(duration=reel_length)
+            mouseclick_delay(reel_length)
             sleep(default_pause)
         
         if cd.find_orange(img_arr) == True:
             print("Spotted orange color! Pausing for a moment...")
             sleep(orange_pause)
             print("Resuming reel...")
-            pyautogui.click(duration=reel_length)
+            mouseclick_delay(reel_length)
             sleep(default_pause)
 
         if cd.find_red(img_arr) == True:
