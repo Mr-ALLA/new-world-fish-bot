@@ -5,7 +5,7 @@ from time import sleep
 from datetime import datetime
 import random
 import color_detection as cd
-
+import fishing_loop as fl
 
 def check_for_fish():
     fish_found = imagesearch("./resources/fish_caught.png")
@@ -50,6 +50,8 @@ def trying_to_catch():
             break
 
 def casting():
+    time_since_antiafk = datetime.now() - fl.program_start
+    print("Time Since Anti AFK: " + str(time_since_antiafk))
     print("Pausing in case of fish inspect animation...")
     sleep(6)
     pyautogui.keyUp('b')
@@ -104,21 +106,4 @@ def return_correct_action():
         return 3
     else:
         return 0
-
-
-#keep_going = True
-#while keep_going:
-    #result_from_model = return_correct_action()
-    #if result_from_model == 0:
-        #print("Nothing happening... Attempting to cast rod.")
-        #casting()
-    ##elif result_from_model == 1:
-        ##print("Wrong Place!!") #handled in the trying to catch function
-    #elif result_from_model == 2:
-        #trying_to_catch()
-    #elif result_from_model == 3:
-        #print("Model saw the red reel color!!")
-        #reeling()
-    #else:
-        #print("Something is wrong with the model!!")
 
