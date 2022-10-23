@@ -3,8 +3,6 @@ import color_detection as cd
 from time import sleep
 from datetime import datetime
 
-program_start = datetime.now()
-
 keep_going = True
 while keep_going:
     result_from_model = ir.return_correct_action()

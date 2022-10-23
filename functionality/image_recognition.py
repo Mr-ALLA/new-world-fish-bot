@@ -5,7 +5,6 @@ from time import sleep
 from datetime import datetime
 import random
 import color_detection as cd
-import fishing_loop as fl
 
 def check_for_fish():
     fish_found = imagesearch("./resources/fish_caught.png")
@@ -29,6 +28,10 @@ def check_reel():
     else:
         return 0
 
+program_start = datetime.now()
+antiafk_threshold_seconds = 1000 #Around 17 minutes
+time_since_antiafk = datetime.now()
+
 def mouseclick_delay(delay):
     pyautogui.mouseDown()
     sleep(delay)
@@ -50,27 +53,32 @@ def trying_to_catch():
             break
 
 def casting():
-    time_since_antiafk = datetime.now() - fl.program_start
-    print("Time Since Anti AFK: " + str(time_since_antiafk))
+    global time_since_antiafk
+    global program_start
+    time_since_antiafk = datetime.now() - program_start
+    if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
+        print("Running Anti-AFK to avoid getting kicked...")
+        sleep(1)
+        anti_afk() 
+    print("Time Since Anti AFK: (This should increase every cast): " + str(time_since_antiafk))
     print("Pausing in case of fish inspect animation...")
     sleep(6)
     pyautogui.keyUp('b')
     print("Casting Fishing Rod!")
     cast_time = random.uniform(1.5,2.2)
-    round(cast_time, 2)
-    print("Casting the rod for a duration of: " + str(cast_time) + " seconds!")
+    print("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!") #trying to round during the print..
     mouseclick_delay(cast_time)
     sleep(0.5)
     pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
-    sleep(2)
+    sleep(1)
 
 def reeling():
     while True:
-        default_pause = random.uniform(0.4,0.8)
+        default_pause = random.uniform(0.2,0.5)
         orange_pause = random.uniform(1.0,1.8)
         red_pause = random.uniform(2.0,2.5)
-        reel_dur_green = random.uniform(1.6,2.0)
-        reel_dur_orange = random.uniform(1.0,1.4)
+        reel_dur_green = random.uniform(0.8,1.4)
+        reel_dur_orange = random.uniform(0.6,0.8)
 
         image = pyautogui.screenshot()
         img_arr = np.array(image)
@@ -106,4 +114,24 @@ def return_correct_action():
         return 3
     else:
         return 0
+
+
+def anti_afk():
+    global program_start
+    move_time = random.uniform(1.0,2.0)
+    anti_afk_movement(move_time)
+    program_start = datetime.now()
+    print("Anti-AFK complete! Resuming fishing...")
+    sleep(1)
+    
+
+
+def anti_afk_movement(time):
+    pyautogui.keyDown('d')
+    sleep(time)
+    pyautogui.keyUp('d')
+    sleep(1)
+    pyautogui.keyDown('a')
+    sleep(time)
+    pyautogui.keyUp('a')
 
