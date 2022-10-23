@@ -21,13 +21,6 @@ def check_if_waiting():
     else:
         return 0
 
-def check_reel():
-    stop_reel = imagesearch("./resources/stop_reeling.png")
-    if stop_reel[0] != -1:
-        return 1
-    else:
-        return 0
-
 program_start = datetime.now()
 antiafk_threshold_seconds = 1000 #Around 17 minutes
 time_since_antiafk = datetime.now()
@@ -74,11 +67,11 @@ def casting():
 
 def reeling():
     while True:
-        default_pause = random.uniform(0.2,0.5)
-        orange_pause = random.uniform(1.0,1.8)
+        default_pause = random.uniform(0.2,0.3)
+        orange_pause = random.uniform(1.0,1.4)
         red_pause = random.uniform(2.0,2.5)
-        reel_dur_green = random.uniform(0.8,1.4)
-        reel_dur_orange = random.uniform(0.6,0.8)
+        reel_dur_green = random.uniform(0.6,1.0)
+        reel_dur_orange = random.uniform(0.4,0.6)
 
         image = pyautogui.screenshot()
         img_arr = np.array(image)
@@ -128,6 +121,8 @@ def anti_afk():
 
 def anti_afk_movement(time):
     half_chance = random.randint(0,1)
+    pyautogui.press('f3')
+    sleep(1)
     if half_chance == 1:
         pyautogui.keyDown('w')
         sleep(time/1.8)
@@ -136,6 +131,8 @@ def anti_afk_movement(time):
         pyautogui.keyDown('s')
         sleep(time)
         pyautogui.keyUp('s')
+        sleep(1)
+        pyautogui.press('f3')
     else:
         pyautogui.keyDown('d')
         sleep(time)
@@ -144,4 +141,6 @@ def anti_afk_movement(time):
         pyautogui.keyDown('a')
         sleep(time)
         pyautogui.keyUp('a')
+        sleep(1)
+        pyautogui.press('f3')
 
