@@ -7,15 +7,14 @@ keep_going = True
 while keep_going:
     result_from_model = ir.return_correct_action()
     if result_from_model == 0:
-        print("Nothing happening... Attempting to cast rod.")
-        print("Pausing to let a possible fish inspect animation play...")
-        sleep(6)
+        print("Nothing happening. Will attempt to cast rod...")
+        sleep(3)
         ir.casting()
     elif result_from_model == 2:
-        print("Main Loop: Spotted waiting for fish. Going to trying to catch...")
+        print("Casting was successful!")
         ir.trying_to_catch()
     elif result_from_model == 3:
-        print("Main Loop: Green color spotted, reeling time!!")
+        print("Spotted green color! Initiating reeling...")
         ir.reeling()
     else:
-        print("Main Loop: Something is wrong with the model!!")
+        print("Image recognition model returned null! Something is wrong!")

@@ -36,12 +36,11 @@ def mouseclick_delay(delay):
 
 def trying_to_catch():
     start_time = datetime.now()
-    print(start_time)
+    print("Waiting for a fish to bite...")
     while True:
         time_delta = datetime.now() - start_time
-        print(time_delta)
         if time_delta.total_seconds() >= 25:
-            print("Catching timeout!")
+            print("Catching timed out! No bites...")
             break
         fish_found = imagesearch("./resources/fish_caught.png")
         if fish_found[0] != -1:
@@ -49,32 +48,30 @@ def trying_to_catch():
             print("Clicking to catch!")
             sleep(1.5)
             break
-        print("Waiting for fish...")
 
 def casting():
-    print("Resetting Camera after fish inspect animation...")
+    print("Pausing in case of fish inspect animation...")
+    sleep(6)
     pyautogui.keyUp('b')
     print("Casting Fishing Rod!")
     cast_time = random.uniform(1.5,2.2)
-    print("Chosen cast length is: " + str(cast_time) + " seconds!")
+    round(cast_time, 2)
+    print("Casting the rod for a duration of: " + str(cast_time) + " seconds!")
     mouseclick_delay(cast_time)
     sleep(0.5)
     pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
-    sleep(3)
+    sleep(2)
 
 def reeling():
     while True:
-        print("In reeling function: Starting reel!")
-        default_pause = random.uniform(0.5,1.2)
-        orange_pause = random.uniform(1.0,2.5)
-        red_pause = random.uniform(2.0,3.0)
-        reel_dur_green = random.uniform(1.8,2.2)
-        reel_dur_orange = random.uniform(1.2,1.6)
+        default_pause = random.uniform(0.4,0.8)
+        orange_pause = random.uniform(1.0,1.8)
+        red_pause = random.uniform(2.0,2.5)
+        reel_dur_green = random.uniform(1.6,2.0)
+        reel_dur_orange = random.uniform(1.0,1.4)
 
         image = pyautogui.screenshot()
         img_arr = np.array(image)
-
-        sleep(0.2)
 
         if cd.find_green(img_arr) == True:
             print("Spotted green color! Reeling...")
@@ -89,11 +86,11 @@ def reeling():
             sleep(default_pause)
 
         elif cd.find_red(img_arr) == True:
-            print("Spotted red color. Better pause for a moment...")
+            print("Spotted red color! Better pause for a while...")
             sleep(red_pause)
 
         else:
-            print("No color found/fish caught, stopping reel")
+            print("Fish caught/Line broken! Stopping reel...")
             break
 
 
