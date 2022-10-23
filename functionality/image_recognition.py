@@ -118,7 +118,7 @@ def return_correct_action():
 
 def anti_afk():
     global program_start
-    move_time = random.uniform(1.0,2.0)
+    move_time = random.uniform(0.4,0.8)
     anti_afk_movement(move_time)
     program_start = datetime.now()
     print("Anti-AFK complete! Resuming fishing...")
@@ -127,11 +127,21 @@ def anti_afk():
 
 
 def anti_afk_movement(time):
-    pyautogui.keyDown('d')
-    sleep(time)
-    pyautogui.keyUp('d')
-    sleep(1)
-    pyautogui.keyDown('a')
-    sleep(time)
-    pyautogui.keyUp('a')
+    half_chance = random.randint(0,1)
+    if half_chance == 1:
+        pyautogui.keyDown('w')
+        sleep(time)
+        pyautogui.keyUp('w')
+        sleep(1)
+        pyautogui.keyDown('s')
+        sleep(time)
+        pyautogui.keyUp('s')
+    else:
+        pyautogui.keyDown('d')
+        sleep(time)
+        pyautogui.keyUp('d')
+        sleep(1)
+        pyautogui.keyDown('a')
+        sleep(time)
+        pyautogui.keyUp('a')
 
