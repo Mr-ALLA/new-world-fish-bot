@@ -130,7 +130,7 @@ def anti_afk_movement(time):
     half_chance = random.randint(0,1)
     if half_chance == 1:
         pyautogui.keyDown('w')
-        sleep(time)
+        sleep(time/1.8)
         pyautogui.keyUp('w')
         sleep(1)
         pyautogui.keyDown('s')
