@@ -5,6 +5,9 @@ from time import sleep
 from datetime import datetime
 import random
 import color_detection as cd
+import sys
+from wrappers.logging_wrapper import debug, info
+sys.path.append('../NWFBot')
 
 def check_for_fish():
     fish_found = imagesearch("./resources/fish_caught.png")
@@ -41,8 +44,8 @@ def trying_to_catch():
         fish_found = imagesearch("./resources/fish_caught.png")
         if fish_found[0] != -1:
             pyautogui.click()
-            print("Clicking to catch!")
-            sleep(1.5)
+            print("Fish on the line!")
+            sleep(1)
             break
 
 def casting():
@@ -53,7 +56,7 @@ def casting():
         print("Running Anti-AFK to avoid getting kicked...")
         sleep(1)
         anti_afk() 
-    print("Time Since Anti AFK: (This should increase every cast): " + str(time_since_antiafk))
+    print("Time Since Anti AFK: " + str(time_since_antiafk))
     print("Pausing in case of fish inspect animation...")
     sleep(6)
     pyautogui.keyUp('b')
