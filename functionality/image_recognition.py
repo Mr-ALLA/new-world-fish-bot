@@ -6,8 +6,8 @@ from datetime import datetime
 import random
 import color_detection as cd
 import sys
-from wrappers.logging_wrapper import debug, info
 sys.path.append('../NWFBot')
+from wrappers.logging_wrapper import debug, info
 
 def check_for_fish():
     fish_found = imagesearch("./resources/fish_caught.png")
