@@ -14,26 +14,6 @@ program_start = datetime.now()
 antiafk_threshold_seconds = 1000 #Around 17 minutes
 time_since_antiafk = datetime.now()
 
-def casting():
-    global time_since_antiafk
-    global program_start
-    time_since_antiafk = datetime.now() - program_start
-    if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
-        print("Running Anti-AFK to avoid getting kicked...")
-        sleep(1)
-        anti_afk() 
-    print("Time Since Anti AFK: " + str(time_since_antiafk))
-    print("Pausing in case of fish inspect animation...")
-    sleep(6)
-    pyautogui.keyUp('b')
-    print("Casting Fishing Rod!")
-    cast_time = random.uniform(1.5,2.2)
-    print("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!") #trying to round during the print..
-    mouseclick_delay(cast_time)
-    sleep(0.5)
-    pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
-    sleep(1)
-
 def return_correct_action():
     image = pyautogui.screenshot()
     img_arr = np.array(image)
@@ -44,21 +24,43 @@ def return_correct_action():
     else:
         return 0
 
+def casting():
+    global time_since_antiafk
+    global program_start
+    time_since_antiafk = datetime.now() - program_start
+    if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
+        info("Moving to avoid getting kicked for idling...")
+        sleep(1)
+        anti_afk() 
+    debug("Time Since last Anti AFK: " + str(time_since_antiafk))
+    sleep(1)
+    info("Pausing for 5s in case of fish inspect animation...")
+    sleep(5)
+    pyautogui.keyUp('b')
+    info("Casting Fishing Rod!")
+    cast_time = random.uniform(1.2,2.2)
+    debug("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!") #trying to round during the print..
+    mouseclick_delay(cast_time)
+    sleep(0.5)
+    pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
+    sleep(1)
+
 def trying_to_catch():
     start_time = datetime.now()
-    print("Waiting for a fish to bite...")
+    info("Waiting for a fish to bite...")
     while True:
         time_delta = datetime.now() - start_time
         if time_delta.total_seconds() >= 25:
-            print("Catching timed out! No bites...")
+            info("Catching timed out! No bites...")
             break
         if ir.image_recog_caught() == 1:
             pyautogui.click()
-            print("Fish on the line!")
+            info("Fish on the line!")
             sleep(1)
             break
 
 def reeling():
+    info("Reeling...")
     while True:
         default_pause = random.uniform(0.2,0.3)
         orange_pause = random.uniform(1.0,1.4)
@@ -70,23 +72,23 @@ def reeling():
         img_arr = np.array(image)
 
         if cd.find_green(img_arr) == True:
-            print("Spotted green color! Reeling...")
+            debug("Spotted green color! Reeling...")
             mouseclick_delay(reel_dur_green)
             sleep(default_pause)
         
         elif cd.find_orange(img_arr) == True:
-            print("Spotted orange color! Pausing for a moment...")
+            debug("Spotted orange color! Pausing for a moment...")
             sleep(orange_pause)
-            print("Resuming reel...")
+            debug("Resuming reel...")
             mouseclick_delay(reel_dur_orange)
             sleep(default_pause)
 
         elif cd.find_red(img_arr) == True:
-            print("Spotted red color! Better pause for a while...")
+            debug("Spotted red color! Better pause for a while...")
             sleep(red_pause)
 
         else:
-            print("Fish caught/Line broken! Stopping reel...")
+            info("Fish caught/Line broken! Stopping reel...")
             break
 
 def mouseclick_delay(delay):
@@ -99,7 +101,7 @@ def anti_afk():
     move_time = random.uniform(0.4,0.8)
     anti_afk_movement(move_time)
     program_start = datetime.now()
-    print("Anti-AFK complete! Resuming fishing...")
+    debug("Anti-AFK complete! Resuming fishing...")
     sleep(1)
 
 def anti_afk_movement(time):

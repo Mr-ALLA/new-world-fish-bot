@@ -1,20 +1,21 @@
 import sys
 sys.path.append('../NWFBot')
 import functionality.fishing_actions as fl
+from wrappers.logging_wrapper import debug, info
 from time import sleep
 
 keep_going = True
 while keep_going:
     result_from_model = fl.return_correct_action()
     if result_from_model == 0:
-        print("Nothing happening. Will attempt to cast rod...")
+        info("Idling... Will attempt to cast rod.")
         sleep(3)
         fl.casting()
     elif result_from_model == 2:
-        print("Casting was successful!")
+        info("Successful cast!")
         fl.trying_to_catch()
     elif result_from_model == 3:
-        print("Spotted green color! Initiating reeling...")
+        debug("Spotted green color! Initiating reeling...")
         fl.reeling()
     else:
-        print("Image recognition model returned null! Something is wrong!")
+        info("Image recognition model returned NULL! Something is very wrong!")
