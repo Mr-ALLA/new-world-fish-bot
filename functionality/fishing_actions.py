@@ -27,13 +27,14 @@ def return_correct_action():
 def casting():
     global time_since_antiafk
     global program_start
+    info("Idling... Will attempt to cast rod.")
+    sleep(1)
     time_since_antiafk = datetime.now() - program_start
     if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
         info("Moving to avoid getting kicked for idling...")
         sleep(1)
         anti_afk() 
     debug("Time Since last Anti AFK: " + str(time_since_antiafk))
-    sleep(1)
     info("Pausing for 5s in case of fish inspect animation...")
     sleep(5)
     pyautogui.keyUp('b')
@@ -42,6 +43,7 @@ def casting():
     debug("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!") #trying to round during the print..
     mouseclick_delay(cast_time)
     sleep(0.5)
+    info("Successful cast!")
     pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
     sleep(1)
 
@@ -128,3 +130,6 @@ def anti_afk_movement(time):
         pyautogui.keyUp('a')
         sleep(1)
         pyautogui.press('f3')
+
+def image_reg_broken():
+    info("Image recognition model returned NULL! Something is very wrong!")

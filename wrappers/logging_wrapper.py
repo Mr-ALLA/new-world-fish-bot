@@ -11,10 +11,8 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()],
 )
 
-
 def info(message):
     logging.info(message)
-
 
 def debug(message):
     logging.debug(message)

@@ -46,8 +46,6 @@ def find_red(img):
   if mask.any():
     return True
   return False
-  
-
 
 #colors:
   #green:

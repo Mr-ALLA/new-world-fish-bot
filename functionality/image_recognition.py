@@ -12,7 +12,6 @@ def image_recog_caught():
     fish_caught = imagesearch("./resources/fish_caught.png")
     return image_recog_result(fish_caught)
     
-
 def image_recog_waiting():
     waiting_for_fish = imagesearch("./resources/waiting_for_fish.png")
     return image_recog_result(waiting_for_fish)
