@@ -1,7 +1,7 @@
+import sys
+sys.path.append('../NWFBot')
 import cv2
 import numpy as np
-import pyautogui
-from time import sleep
 
 color_discrepency = 4 # The amount of discrepency the color can have to still be accepted. 4 is performing well.
 

@@ -1,20 +1,20 @@
-import image_recognition as ir
-import color_detection as cd
+import sys
+sys.path.append('../NWFBot')
+import functionality.fishing_actions as fl
 from time import sleep
-from datetime import datetime
 
 keep_going = True
 while keep_going:
-    result_from_model = ir.return_correct_action()
+    result_from_model = fl.return_correct_action()
     if result_from_model == 0:
         print("Nothing happening. Will attempt to cast rod...")
         sleep(3)
-        ir.casting()
+        fl.casting()
     elif result_from_model == 2:
         print("Casting was successful!")
-        ir.trying_to_catch()
+        fl.trying_to_catch()
     elif result_from_model == 3:
         print("Spotted green color! Initiating reeling...")
-        ir.reeling()
+        fl.reeling()
     else:
         print("Image recognition model returned null! Something is wrong!")
