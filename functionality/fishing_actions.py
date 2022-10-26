@@ -10,9 +10,12 @@ import functionality.color_detection as cd
 from wrappers.logging_wrapper import debug, info
 import functionality.image_recognition as ir
 
-program_start = datetime.now()
+antiafk_start = datetime.now()
+repair_start = datetime.now()
 antiafk_threshold_seconds = 1000 #Around 17 minutes
+repair_threshold = 2000 # Needs to be user adjustable
 time_since_antiafk = datetime.now()
+time_since_repair = datetime.now()
 
 def return_correct_action():
     image = pyautogui.screenshot()
@@ -26,25 +29,33 @@ def return_correct_action():
 
 def casting():
     global time_since_antiafk
-    global program_start
-    info("Idling... Will attempt to cast rod.")
-    sleep(1)
-    time_since_antiafk = datetime.now() - program_start
+    global antiafk_start
+    global repair_start
+    global time_since_repair
+    time_since_antiafk = datetime.now() - antiafk_start
     if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
         info("Moving to avoid getting kicked for idling...")
         sleep(1)
-        anti_afk() 
-    debug("Time Since last Anti AFK: " + str(time_since_antiafk))
+        anti_afk()
+    time_since_repair = datetime.now() - repair_start
+    if time_since_repair.total_seconds() > repair_threshold:
+        info("Time to repair the fishing rod...")
+        sleep(1)
+        repair_rod()
+    info("Idling... Will attempt to cast rod.")
+    sleep(1)
+    debug("Time since last Anti AFK: " + str(time_since_antiafk))
+    debug("Time since last repair: " + str(time_since_repair))
     info("Pausing for 5s in case of fish inspect animation...")
     sleep(5)
     pyautogui.keyUp('b')
     info("Casting Fishing Rod!")
     cast_time = random.uniform(1.2,2.2)
-    debug("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!") #trying to round during the print..
+    debug("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!")
     mouseclick_delay(cast_time)
     sleep(0.5)
     info("Successful cast!")
-    pyautogui.keyDown('b') # To counteract the permanent movement of the camera after inspecting a caught fish
+    pyautogui.keyDown('b')
     sleep(1)
 
 def trying_to_catch():
@@ -99,10 +110,10 @@ def mouseclick_delay(delay):
     pyautogui.mouseUp()
 
 def anti_afk():
-    global program_start
+    global antiafk_start
     move_time = random.uniform(0.4,0.8)
     anti_afk_movement(move_time)
-    program_start = datetime.now()
+    antiafk_start = datetime.now()
     debug("Anti-AFK complete! Resuming fishing...")
     sleep(1)
 
@@ -130,6 +141,55 @@ def anti_afk_movement(time):
         pyautogui.keyUp('a')
         sleep(1)
         pyautogui.press('f3')
+
+def repair_rod():
+    global repair_start
+    screen_res = pyautogui.size()
+    arm_disarm_rod()
+    sleep(1)
+    pyautogui.press('tab')
+    repair_start = datetime.now()
+    sleep(1)
+    if screen_res[1] == 1440:
+        pyautogui.click(1152,663)
+        sleep(1)
+        pyautogui.keyDown('r')
+        sleep(0.5)
+        pyautogui.click(1152,663)
+        sleep(0.5)
+        pyautogui.keyUp('r')
+        sleep(0.5)
+        pyautogui.press('e')
+        sleep(0.5)
+        pyautogui.press('tab')
+        sleep(0.5)
+        pyautogui.press('f3')
+        info("Repairing complete!")
+        sleep(1)
+    elif screen_res[1] == 1080:
+        pyautogui.click(864,497)
+        sleep(1)
+        pyautogui.keyDown('r')
+        sleep(0.5)
+        pyautogui.click(864,497)
+        sleep(0.5)
+        pyautogui.keyUp('r')
+        sleep(0.5)
+        pyautogui.press('e')
+        sleep(0.5)
+        pyautogui.press('tab')
+        sleep(0.5)
+        pyautogui.press('f3')
+        info("Repairing complete!")
+        sleep(1)
+    else:
+        info("Repair failed due to unsupported screen resolution. Auto-repair only works with 1080p or 1440p monitors.")
+
+
+def arm_disarm_rod():
+    pyautogui.press('f3')
+    sleep(1)
+    pyautogui.press('f3')
 
 def image_reg_broken():
     info("Image recognition model returned NULL! Something is very wrong!")
