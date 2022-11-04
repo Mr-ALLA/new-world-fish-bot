@@ -31,7 +31,7 @@ def load_gui():
         is_bait_active()
         bait_slot()
         info("STARTING BOT... Please make sure the game window is in focus within the next 5 seconds...")
-        sleep(4)
+        sleep(5)
         t2.start()
     start_btn=Button(win,text="Start Fishing", width=12,height=2,command=start_func,bg="green")
     start_btn.place(x=30,y=15)

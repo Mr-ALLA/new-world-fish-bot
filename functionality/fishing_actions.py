@@ -69,8 +69,6 @@ def casting():
         info("Time to repair the fishing rod...")
         sleep(1)
         repair_rod()
-    if get_bait_active() == 1:
-        equip_bait()
     info("Idling... Will attempt to cast rod.")
     sleep(1)
     debug("Time since last Anti AFK: " + str(time_since_antiafk))
@@ -132,7 +130,7 @@ def reeling():
 
         else:
             fish_caught = fish_caught + 1
-            info("Fish caught! The bot has caught " + fish_caught + " fish!")
+            info("Fish caught! The bot has caught " + str(fish_caught) + " fish!")
             break
 
 def mouseclick_delay(delay):
@@ -228,16 +226,22 @@ def equip_bait():
             pyautogui.click(1588,627)
             sleep(3)
             pyautogui.click(1995,1097)
+            sleep(0.4)
+            pyautogui.click()
             sleep(2)
         elif get_bait_slot() == 2:
             pyautogui.click(1711,623)
             sleep(3)
             pyautogui.click(1995,1097)
+            sleep(0.4)
+            pyautogui.click()
             sleep(2)
         elif get_bait_slot() == 3:
             pyautogui.click(1814,619)
             sleep(3)
             pyautogui.click(1995,619)
+            sleep(0.4)
+            pyautogui.click()
             sleep(2)
         else:
             info("BAIT EQUIP FAILED. No bait slot was chosen in the settings. Restart the program and remembers to choose a bait slot.")
@@ -246,16 +250,22 @@ def equip_bait():
             pyautogui.click(1191,470)
             sleep(3)
             pyautogui.click(1496,823)
+            sleep(0.4)
+            pyautogui.click()
             sleep(2)
         elif get_bait_slot() == 2:
             pyautogui.click(1283,467)
             sleep(3)
             pyautogui.click(1496,823)
+            sleep(0.4)
+            pyautogui.click()
             sleep(2)
         elif get_bait_slot() == 3:
             pyautogui.click(1360,464)
             sleep(3)
             pyautogui.click(1496,823)
+            sleep(0.4)
+            pyautogui.click()
             sleep(2)
         else:
             info("BAIT EQUIP FAILED. No bait slot was chosen in the settings. Restart the program and remembers to choose a bait slot.")

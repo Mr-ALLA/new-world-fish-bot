@@ -16,6 +16,9 @@ def get_keep_going():
 def start_fishing():
     global keep_going
     debug("YOUR SETTINGS ARE: REPAIR: " + str(fa.get_repair_threshold()) + ". IS BAIT ACTIVE?: " + str(fa.get_bait_active()) + ". WHAT BAIT SLOT?: " + str(fa.get_bait_slot()))
+    if fa.get_bait_active() == 1:
+        fa.equip_bait()
+        sleep(1)
     while True:
         while keep_going == True:
             result_from_model = fa.return_correct_action()
