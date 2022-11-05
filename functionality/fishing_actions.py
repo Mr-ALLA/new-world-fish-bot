@@ -239,7 +239,7 @@ def equip_bait():
         elif get_bait_slot() == 3:
             pyautogui.click(1814,619)
             sleep(3)
-            pyautogui.click(1995,619)
+            pyautogui.click(1995,1097)
             sleep(0.4)
             pyautogui.click()
             sleep(2)
