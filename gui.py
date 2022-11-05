@@ -2,7 +2,7 @@ import sys
 sys.path.append('../NWFBot')
 import tkinter.messagebox
 from tkinter import *
-from bot import start_fishing,set_keep_going
+from functionality.bot import start_fishing,set_keep_going
 import threading
 from wrappers.logging_wrapper import info
 from functionality.fishing_actions import set_repair_threshold,set_bait_active,set_bait_slot
