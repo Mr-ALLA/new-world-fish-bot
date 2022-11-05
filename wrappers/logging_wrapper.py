@@ -6,7 +6,7 @@ log_level = {
 }
 
 logging.basicConfig(
-    level="DEBUG",
+    level="INFO",
     format="[%(asctime)s][%(levelname)s] - %(message)s",
     handlers=[logging.StreamHandler()],
     datefmt='%H:%M:%S'
