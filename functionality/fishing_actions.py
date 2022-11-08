@@ -83,7 +83,7 @@ def casting():
     sleep(0.5)
     info("Successful cast!")
     pyautogui.keyDown('b')
-    sleep(1)
+    sleep(2)
 
 def trying_to_catch():
     start_time = datetime.now()
