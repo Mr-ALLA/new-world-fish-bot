@@ -13,7 +13,7 @@ import functionality.image_recognition as ir
 antiafk_start = datetime.now()
 repair_start = datetime.now()
 antiafk_threshold_seconds = 1000 #Around 17 minutes
-repair_threshold = int # Needs to be user adjustable
+repair_threshold = int 
 time_since_antiafk = datetime.now()
 time_since_repair = datetime.now()
 is_bait_active = int
@@ -59,6 +59,11 @@ def casting():
     global antiafk_start
     global repair_start
     global time_since_repair
+    debug("Time since last Anti-AFK: " + str(time_since_antiafk))
+    debug("Time since last repair: " + str(time_since_repair))
+    info("Pausing in case of rare catch inspect animation...")
+    sleep(random.uniform(5.4,5.8))
+    pyautogui.keyUp('b')
     time_since_antiafk = datetime.now() - antiafk_start
     if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
         info("Moving to avoid getting kicked for idling...")
@@ -69,15 +74,9 @@ def casting():
         info("Time to repair the fishing rod...")
         sleep(1)
         repair_rod()
-    info("Idling... Will attempt to cast rod.")
     sleep(1)
-    debug("Time since last Anti AFK: " + str(time_since_antiafk))
-    debug("Time since last repair: " + str(time_since_repair))
-    info("Pausing for 5s in case of fish inspect animation...")
-    sleep(random.uniform(5.4,6))
-    pyautogui.keyUp('b')
-    info("Casting Fishing Rod!")
-    cast_time = random.uniform(1.3,2.0)
+    info("Trying to cast fishing rod...")
+    cast_time = random.uniform(1.5,2.0)
     debug("Casting the rod for a duration of: " + str(round(cast_time,2)) + " seconds!")
     mouseclick_delay(cast_time)
     sleep(0.5)
@@ -91,17 +90,17 @@ def trying_to_catch():
     while True:
         time_delta = datetime.now() - start_time
         if time_delta.total_seconds() >= 25:
-            info("Catching timed out! No bites...")
+            info("Catching timed out! No bites. Trying again...")
             break
         if ir.image_recog_caught() == 1:
             pyautogui.click()
-            info("Fish on the line!")
+            info("Caught one!")
             sleep(1)
             break
 
 def reeling():
     global fish_caught
-    info("Reeling...")
+    info("Reeling a fish...")
     while True:
         default_pause = random.uniform(0.2,0.3)
         orange_pause = random.uniform(1.0,1.4)
@@ -130,7 +129,7 @@ def reeling():
 
         else:
             fish_caught = fish_caught + 1
-            info("Fish caught! The bot has caught " + str(fish_caught) + " fish!")
+            info("Fish caught! The bot has caught: " + str(fish_caught) + " fish!")
             break
 
 def mouseclick_delay(delay):
@@ -193,7 +192,7 @@ def repair_rod():
         pyautogui.press('tab')
         sleep(0.5)
         pyautogui.press('f3')
-        info("Repairing complete!")
+        info("Repairing complete! Resuming fishing...")
         sleep(1)
     elif screen_res[1] == 1080:
         pyautogui.click(864,497)
@@ -209,7 +208,7 @@ def repair_rod():
         pyautogui.press('tab')
         sleep(0.5)
         pyautogui.press('f3')
-        info("Repairing complete!")
+        info("Repairing complete! Resuming fishing...")
         sleep(1)
     else:
         info("Repair failed due to unsupported screen resolution. Auto-repair only works with 1080p or 1440p monitors.")
@@ -244,7 +243,7 @@ def equip_bait():
             pyautogui.click()
             sleep(2)
         else:
-            info("BAIT EQUIP FAILED. No bait slot was chosen in the settings. Restart the program and remembers to choose a bait slot.")
+            info("BAIT EQUIP FAILED. No bait slot was chosen in the settings. Restart the program and remember to choose a bait slot.")
     elif screen_res[1] == 1080:
         if get_bait_slot() == 1:
             pyautogui.click(1191,470)
@@ -268,7 +267,7 @@ def equip_bait():
             pyautogui.click()
             sleep(2)
         else:
-            info("BAIT EQUIP FAILED. No bait slot was chosen in the settings. Restart the program and remembers to choose a bait slot.")
+            info("BAIT EQUIP FAILED. No bait slot was chosen in the settings. Restart the program and remember to choose a bait slot.")
     else:
         info("BAIT EQUIP FAILED. Unsupported screen resolution! Only 1920x1080 and 2560x1440 monitors supported!")
     arm_disarm_rod()

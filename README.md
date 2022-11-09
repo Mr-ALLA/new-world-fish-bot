@@ -1,6 +1,6 @@
-# New World Fishing Bot</p>
+# New World Fishing Bot (80-85 FISH PER HOUR!)
 ![banner2](https://user-images.githubusercontent.com/71074471/200469581-ad42ac61-a995-4d75-95db-c2b8c8592cb9.png)
-FINALLY A FREE NO COMPROMISES FISHING BOT FOR NEW WORLD!
+FINALLY A FREE, NO COMPROMISES FISHING BOT FOR NEW WORLD!
 
 # DISCLAIMER
 This program is meant to be used purely for educational purposes. Use of this program is a direct violation of Amazon Game Studio's Terms of Service, and I am in no way responsible if your New World account gets suspended!
