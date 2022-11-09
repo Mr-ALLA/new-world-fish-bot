@@ -62,7 +62,7 @@ def casting():
     debug("Time since last Anti-AFK: " + str(time_since_antiafk))
     debug("Time since last repair: " + str(time_since_repair))
     info("Pausing in case of rare catch inspect animation...")
-    sleep(random.uniform(5.4,5.8))
+    sleep(random.uniform(6,6.1))
     pyautogui.keyUp('b')
     time_since_antiafk = datetime.now() - antiafk_start
     if time_since_antiafk.total_seconds() > antiafk_threshold_seconds:
@@ -82,7 +82,7 @@ def casting():
     sleep(0.5)
     info("Successful cast!")
     pyautogui.keyDown('b')
-    sleep(2)
+    sleep(3)
 
 def trying_to_catch():
     start_time = datetime.now()
@@ -100,6 +100,7 @@ def trying_to_catch():
 
 def reeling():
     global fish_caught
+    wrong_red_detection = 0
     info("Reeling a fish...")
     while True:
         default_pause = random.uniform(0.2,0.3)
@@ -123,9 +124,18 @@ def reeling():
             mouseclick_delay(reel_dur_orange)
             sleep(default_pause)
 
-        elif cd.find_red(img_arr) == True:
+        elif cd.find_red(img_arr) == True and wrong_red_detection < 5:
             debug("Spotted red color! Better pause for a while...")
+            wrong_red_detection = wrong_red_detection + 1
             sleep(red_pause)
+        
+        elif wrong_red_detection >= 5:
+            info("Bot is falsely detecting red color. Most likely cause your bag is full...")
+            sleep(1)
+            info("Consider upgrading your bags. Bot will be a little slower with a full bag. Stopping reel...")
+            fish_caught = fish_caught + 1
+            info("Fish caught! The bot has caught: " + str(fish_caught) + " fish!")
+            break
 
         else:
             fish_caught = fish_caught + 1
@@ -174,40 +184,48 @@ def repair_rod():
     global repair_start
     screen_res = pyautogui.size()
     arm_disarm_rod()
-    sleep(1)
+    sleep(2)
     pyautogui.press('tab')
     repair_start = datetime.now()
-    sleep(1)
+    sleep(2)
     if screen_res[1] == 1440:
         pyautogui.click(1152,663)
         sleep(1)
         pyautogui.keyDown('r')
-        sleep(0.8)
+        sleep(1)
         pyautogui.click(1152,663)
-        sleep(0.8)
+        sleep(1)
         pyautogui.keyUp('r')
-        sleep(0.8)
+        sleep(1)
         pyautogui.press('e')
-        sleep(0.8)
+        sleep(1)
         pyautogui.press('tab')
-        sleep(0.8)
+        sleep(1)
         pyautogui.press('f3')
+        sleep(2)
+        if get_bait_active() == 1:
+            equip_bait()
+            sleep(1)
         info("Repairing complete! Resuming fishing...")
         sleep(1)
     elif screen_res[1] == 1080:
         pyautogui.click(864,497)
         sleep(1)
         pyautogui.keyDown('r')
-        sleep(0.8)
+        sleep(1)
         pyautogui.click(864,497)
-        sleep(0.8)
+        sleep(1)
         pyautogui.keyUp('r')
-        sleep(0.8)
+        sleep(1)
         pyautogui.press('e')
-        sleep(0.8)
+        sleep(1)
         pyautogui.press('tab')
-        sleep(0.8)
+        sleep(1)
         pyautogui.press('f3')
+        sleep(2)
+        if get_bait_active() == 1:
+            equip_bait()
+            sleep(1)
         info("Repairing complete! Resuming fishing...")
         sleep(1)
     else:

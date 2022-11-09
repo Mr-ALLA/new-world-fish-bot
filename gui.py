@@ -8,10 +8,11 @@ from wrappers.logging_wrapper import info
 from functionality.fishing_actions import set_repair_threshold,set_bait_active,set_bait_slot
 from time import sleep
 
+nw_version = 1.2
 
 def load_gui():
     win=Tk() #creating the main window and storing the window object in 'win'
-    win.title('funny ocean creature catching helper') #setting title of the window
+    win.title('funny ocean creature catching helper v' + str(nw_version)) #setting title of the window
     win.geometry('600x250') #setting the size of the window
     win.resizable(width=False, height=False)
     win.bind_all("<Button-1>", lambda event: event.widget.focus_set())
