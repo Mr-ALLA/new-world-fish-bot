@@ -42,7 +42,7 @@ This program is meant to be used purely for educational purposes. Use of this pr
 ![2022-11-08 05_08_20-funny ocean creature catching helper](https://user-images.githubusercontent.com/71074471/200473037-29470f6b-af3d-42c2-9b86-938c70b62f88.png)
 * In your IN-GAME settings, make sure that you bind the 'b' key to 'free-look'. Test that the key works before starting the bot! Otherwise it will not be able to recenter the camera:\
 ![2022-11-05 08_13_51-New World](https://user-images.githubusercontent.com/71074471/200473427-6da33171-930d-4f19-b0fa-984661c997b2.png)
-* You're all set! Press start fishing, and then make sure your game windows is in focus, and in full screen! The bot will start fishing on its own!
+* You're all set! Pull out your fishing rod in-game, and press start fishing. Then make sure your game window is in focus, and in full screen! The bot will start fishing on its own!
 
 # Support
 Coming soon! Thanks for considering!
